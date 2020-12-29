@@ -1,0 +1,102 @@
+
+def standard():
+    #asks users how much each grade is worth
+    print("You will be inputting the standard that each grade is worth.")
+    grade = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"]
+    values = {}
+    for grades in grade:
+        try:
+            credit = float(input(grades + ": "))
+        except:
+            print("Not a valid value. Please press enter and enter float.")
+            credit = float(input(grades + ": "))
+        values[grades] = credit
+    return values
+
+
+def classes():
+    #asks users to name classes and credits
+    response = input("Enter your classes and number of credits. Press Enter to start. Press N to exit. ")
+    n = 0
+    credits = {}
+
+    while response.lower() != "n":
+        rooms = input("Enter name of class: ")
+
+        try:
+            credit = float(input("How many credits is " + rooms + ": "))
+        except:
+            print("Not a valid value. Please enter a float")
+            credit = input("How many credits is " + rooms + ": ")
+
+        credits[rooms] = credit
+
+        n += 1
+
+        response = input("You have " + str(n) + " classes entered. Press Enter to continue or press N to exit. ")
+
+    return credits
+
+
+def grade(school, credits):
+    #asks users for grades of each class
+    grades = []
+    for classes in school:
+        grade = input("What grade did you get in " + classes + "? ")
+
+        while grade.upper() not in credits:
+            grade = input("Invalid grade. What grade did you get in " + classes + "? ")
+
+        grades.append(grade)
+
+    return grades
+
+
+def calc_gpa(credits, grades, school):
+    #calculates GPA
+    points = []
+
+    for grade in grades:
+        points.append(credits[grade.upper()])
+
+    total = 0
+    n = 0
+    for values in school:
+        total += (points[n] * school[values])
+        n += 1
+
+    # gpa = [sum of (grades * credits)]/credits
+    gpa = total / (sum(school.values()))
+
+    return gpa
+
+
+def summary_chart(school, grades, gpa):
+    #prints summary chart of grade, credits, class
+    print("-" * 64)
+    print(f'|{"Class":^40s}|{"Credits":^10s}|{"Grades":^10s}|')
+    print("-" * 64)
+
+    n = 0
+    for classes in school:
+        print(f'|{classes:^40s}|{school[classes]:^10.1f}|{grades[n].upper():^10s}|')
+        n += 1
+    print("-" * 64)
+    print(f'|{"Total GPA":<20s}{gpa:>42.2f}|')
+    print("-" * 64)
+
+
+def main():
+    print("Welcome to the GPA Calculator. Please follow the instructions below.")
+    credits = standard()
+    school = classes()
+    grades = grade(school, credits)
+    gpa = calc_gpa(credits, grades, school)
+    summary_chart(school, grades, gpa)
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    main()
+
+
