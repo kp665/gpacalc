@@ -1,3 +1,4 @@
+import tkinter as tk
 
 def standard():
     #asks users how much each grade is worth
@@ -9,7 +10,7 @@ def standard():
             credit = float(input(grades + ": "))
         except:
             print("Not a valid value. Please press enter and enter float.")
-            credit = float(input(grades + ": "))
+            standard()
         values[grades] = credit
     return values
 
@@ -27,7 +28,7 @@ def classes():
             credit = float(input("How many credits is " + rooms + ": "))
         except:
             print("Not a valid value. Please enter a float")
-            credit = input("How many credits is " + rooms + ": ")
+            classes()
 
         credits[rooms] = credit
 
@@ -98,5 +99,3 @@ def main():
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     main()
-
-
