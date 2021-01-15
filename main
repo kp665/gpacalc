@@ -1,101 +1,105 @@
-import tkinter as tk
+from tkinter import *
+from gui import *
+root = Tk()
 
-def standard():
-    #asks users how much each grade is worth
-    print("You will be inputting the standard that each grade is worth.")
-    grade = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"]
-    values = {}
-    for grades in grade:
-        try:
-            credit = float(input(grades + ": "))
-        except:
-            print("Not a valid value. Please press enter and enter float.")
-            standard()
-        values[grades] = credit
-    return values
+
+def intro():
+    frame = LabelFrame(root, padx=5, pady=5)
+    frame.grid(padx=10, pady=10)
+    label = Label(frame, text="Welcome to the GPA Calculator. Please follow the instructions below.")
+    label.grid()
+
+
+def grades():
+    lst = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"]
+
+    frame1 = LabelFrame(root)
+    frame1.grid()
+
+    label = Label(frame1, text="Please input how much each grade is worth.\n")
+    label.grid()
+
+    for button in range(len(lst)):
+        frame = Frame(frame1, padx=10, pady=10)
+        frame.grid()
+        label = Label(frame, text=lst[button] + " : ")
+        entry = Entry(frame)
+        label.grid(column=0, row=0)
+        entry.grid(column=1, row=0)
 
 
 def classes():
-    #asks users to name classes and credits
-    response = input("Enter your classes and number of credits. Press Enter to start. Press N to exit. ")
-    n = 0
-    credits = {}
+    frame = LabelFrame(root)
+    frame.grid(row=1, column=1, sticky="N")
 
-    while response.lower() != "n":
-        rooms = input("Enter name of class: ")
+    label = Label(frame, text="Enter your classes, number of credits, and grades.\n")
+    label.grid(pady=10)
 
-        try:
-            credit = float(input("How many credits is " + rooms + ": "))
-        except:
-            print("Not a valid value. Please enter a float")
-            classes()
+    label1 = Label(frame, text="Class")
+    label1.grid(column=0, row=1)
+    label2 = Label(frame, text="No. Credits")
+    label2.grid(column=1, row=1)
+    label3 = Label(frame, text="Grades")
+    label3.grid(column=2, row=1)
 
-        credits[rooms] = credit
+    """for i in range(3):
+        entry1 = Entry(frame, width=30)
+        entry1.grid(column=0, row=i+2, padx=10)
+        entry2 = Entry(frame, width=7)
+        entry2.grid(column=1, row=i+2, pady=10)
+        entry3 = Entry(frame, width=7)
+        entry3.grid(column=2, row=i+2, padx=10, pady=10)"""
 
-        n += 1
-
-        response = input("You have " + str(n) + " classes entered. Press Enter to continue or press N to exit. ")
-
-    return credits
-
-
-def grade(school, credits):
-    #asks users for grades of each class
-    grades = []
-    for classes in school:
-        grade = input("What grade did you get in " + classes + "? ")
-
-        while grade.upper() not in credits:
-            grade = input("Invalid grade. What grade did you get in " + classes + "? ")
-
-        grades.append(grade)
-
-    return grades
+    for i in range(3):
+        entry1 = Entry(frame, width=30)
+        entry1.grid(column=0, row=i + 2, padx=10)
+        entry2 = Entry(frame, width=7)
+        entry2.grid(column=1, row=i + 2, pady=10)
+        entry3 = Entry(frame, width=7)
+        entry3.grid(column=2, row=i + 2, padx=10, pady=10)
 
 
-def calc_gpa(credits, grades, school):
-    #calculates GPA
-    points = []
+    def buttons():
+        n=9
+        for i in range(3):
+            entry1 = Entry(frame, width=30)
+            entry1.grid(column=0, row=i + 6, padx=10)
+            entry2 = Entry(frame, width=7)
+            entry2.grid(column=1, row=i + 6, pady=10)
+            entry3 = Entry(frame, width=7)
+            entry3.grid(column=2, row=i + 6, padx=10, pady=10)
 
-    for grade in grades:
-        points.append(credits[grade.upper()])
+        load.grid(row=n)
+        n+=3
 
-    total = 0
-    n = 0
-    for values in school:
-        total += (points[n] * school[values])
-        n += 1
+    load = Button(frame, text="Load More", command=buttons)
+    load.grid(padx=10, pady=10, column=2)
 
-    # gpa = [sum of (grades * credits)]/credits
-    gpa = total / (sum(school.values()))
-
-    return gpa
-
-
-def summary_chart(school, grades, gpa):
-    #prints summary chart of grade, credits, class
-    print("-" * 64)
-    print(f'|{"Class":^40s}|{"Credits":^10s}|{"Grades":^10s}|')
-    print("-" * 64)
-
-    n = 0
-    for classes in school:
-        print(f'|{classes:^40s}|{school[classes]:^10.1f}|{grades[n].upper():^10s}|')
-        n += 1
-    print("-" * 64)
-    print(f'|{"Total GPA":<20s}{gpa:>42.2f}|')
-    print("-" * 64)
 
 
 def main():
-    print("Welcome to the GPA Calculator. Please follow the instructions below.")
-    credits = standard()
-    school = classes()
-    grades = grade(school, credits)
-    gpa = calc_gpa(credits, grades, school)
-    summary_chart(school, grades, gpa)
+    intro()
+    grades()
+    classes()
+    
+    root.mainloop()
+
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     main()
+
+
+
+
+        #button1 = Button(text="Load more")
+        #button1.grid(row=6)
+
+# button1 = Button(text="Submit", command = summary_chart)
+# button1.grid()"""
+
+
+
+
+
